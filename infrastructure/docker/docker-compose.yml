@@ -1,0 +1,79 @@
+services:
+  redis:
+    container_name: calcula-ai-redis
+    image: redis:7.2-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - calcula-ai-redis:/data
+    command: [ "redis-server", "--appendonly", "yes" ]
+
+  rabbitmq:
+    container_name: calcula-ai-rabbitmq
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+
+  elasticsearch:
+    container_name: calcula-ai-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.18.0
+    environment:
+      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.type=single-node"
+      - "xpack.security.enabled=false"
+    volumes:
+        - calcula-ai-elasticsearch:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      - elastic
+
+  kibana:
+    container_name: calcula-ai-kibana
+    image: docker.elastic.co/kibana/kibana:8.18.0
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+    volumes:
+      - calcula-ai-kibana:/usr/share/kibana/data
+    depends_on:
+      - elasticsearch
+    networks:
+      - elastic
+
+  logstash:
+    container_name: calcula-ai-logstash
+    image: docker.elastic.co/logstash/logstash:8.18.0
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    ports:
+      - "5044:5044"
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - elastic
+    depends_on:
+      - elasticsearch
+
+volumes:
+  calcula-ai-redis:
+  calcula-ai-elasticsearch:
+  calcula-ai-kibana:
+
+networks:
+  elastic:
+    driver: bridge

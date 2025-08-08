@@ -1,0 +1,33 @@
+application:
+  name: "\${spring.application.name}"
+
+server:
+  error:
+    include-stacktrace: never
+
+spring:
+  application:
+    name: Calcula-AI-API
+  rabbitmq:
+    host: "\${RABBITMQ_HOST:localhost}"
+    port: "\${RABBITMQ_PORT:5672}"
+    virtual-host: "\${RABBITMQ_VIRTUAL_HOST:/}"
+    username: "\${RABBITMQ_USERNAME:guest}"
+    password: "\${RABBITMQ_PASSWORD:guest}"
+
+rabbitmq:
+  queues:
+    process-photo:
+      exchange: "\${RABBITMQ_EXCHANGE_PROCESS_PHOTO:calcula-ai}"
+      routing-key: "\${RABBITMQ_QUEUE_PROCESS_PHOTO:process-photo}"
+      queue: "\${RABBITMQ_QUEUE_PROCESS_PHOTO:process-photo-queue}"
+
+minio:
+  access-key: "\${MINIO_ACCESS_KEY}"
+  secret-key: "\${MINIO_SECRET_KEY}"
+  endpoint: "\${MINIO_ENDPOINT}"
+
+logstash:
+  url: "\${LOGSTASH_URL:localhost:5000}"
+  token: "\${LOGSTASH_TOKEN:xxx}"
+  env: "\${ENV:dev}"
