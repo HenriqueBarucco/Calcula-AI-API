@@ -26,7 +26,7 @@ rabbitmq:
   queues:
     process-photo:
       exchange: "\${RABBITMQ_EXCHANGE_PROCESS_PHOTO:calcula-ai}"
-      routing-key: "\${RABBITMQ_QUEUE_PROCESS_PHOTO:process-photo}"
+      routing-key: "\${RABBITMQ_ROUTING_KEY_PROCESS_PHOTO:process-photo}"
       queue: "\${RABBITMQ_QUEUE_PROCESS_PHOTO:process-photo-queue}"
 
 minio:
