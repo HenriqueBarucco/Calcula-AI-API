@@ -14,6 +14,13 @@ spring:
     virtual-host: "\${RABBITMQ_VIRTUAL_HOST:/}"
     username: "\${RABBITMQ_USERNAME:guest}"
     password: "\${RABBITMQ_PASSWORD:guest}"
+  data:
+    redis:
+      host: "${REDIS_HOST:localhost}"
+      port: "${REDIS_PORT:6379}"
+      password: "${REDIS_PASSWORD:}"
+      database: 0
+      timeout: 60000
 
 rabbitmq:
   queues:
