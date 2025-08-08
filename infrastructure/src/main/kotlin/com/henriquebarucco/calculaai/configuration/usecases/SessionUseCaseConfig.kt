@@ -6,6 +6,8 @@ import com.henriquebarucco.calculaai.session.add.AddSessionPriceUseCase
 import com.henriquebarucco.calculaai.session.add.DefaultAddSessionPriceUseCase
 import com.henriquebarucco.calculaai.session.create.CreateSessionUseCase
 import com.henriquebarucco.calculaai.session.create.DefaultCreateSessionUseCase
+import com.henriquebarucco.calculaai.session.get.DefaultGetSessionUseCase
+import com.henriquebarucco.calculaai.session.get.GetSessionUseCase
 import com.henriquebarucco.calculaai.session.update.DefaultUpdateSessionPriceUseCase
 import com.henriquebarucco.calculaai.session.update.UpdateSessionPriceUseCase
 import org.springframework.context.annotation.Bean
@@ -24,4 +26,7 @@ class SessionUseCaseConfig(
 
     @Bean
     fun updateSessionPriceUseCase(): UpdateSessionPriceUseCase = DefaultUpdateSessionPriceUseCase(sessionGateway)
+
+    @Bean
+    fun getSessionUseCase(): GetSessionUseCase = DefaultGetSessionUseCase(sessionGateway)
 }

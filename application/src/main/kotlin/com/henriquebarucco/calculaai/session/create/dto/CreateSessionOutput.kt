@@ -6,6 +6,6 @@ data class CreateSessionOutput(
     val id: String,
 ) {
     constructor(session: Session) : this(
-        id = session.id.toString(),
+        id = session.id.value,
     )
 }
