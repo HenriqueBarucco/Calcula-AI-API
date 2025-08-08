@@ -16,10 +16,8 @@ spring:
     password: "\${RABBITMQ_PASSWORD:guest}"
   data:
     redis:
-      host: "${REDIS_HOST:localhost}"
-      port: "${REDIS_PORT:6379}"
-      password: "${REDIS_PASSWORD:}"
-      database: 0
+      url: "\${REDIS_URL:redis://localhost:6379}"
+      database: "\${REDIS_DATABASE:0}"
       timeout: 60000
 
 rabbitmq:
@@ -35,6 +33,7 @@ minio:
   endpoint: "\${MINIO_ENDPOINT}"
 
 logstash:
-  url: "\${LOGSTASH_URL:localhost:5000}"
+  url: "\${LOGSTASH_URL:localhost}"
+  port: "\${LOGSTASH_PORT:5000}"
   token: "\${LOGSTASH_TOKEN:xxx}"
   env: "\${ENV:dev}"
