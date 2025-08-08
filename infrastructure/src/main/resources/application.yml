@@ -16,7 +16,9 @@ spring:
     password: "\${RABBITMQ_PASSWORD:guest}"
   data:
     redis:
-      url: "\${REDIS_URL:redis://localhost:6379}"
+      host: "\${REDIS_HOST:localhost}"
+      port: "\${REDIS_PORT:6379}"
+      password: "\${REDIS_PASSWORD:}"
       database: "\${REDIS_DATABASE:0}"
       timeout: 60000
 
