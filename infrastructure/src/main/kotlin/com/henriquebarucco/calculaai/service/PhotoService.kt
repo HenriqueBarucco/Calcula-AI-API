@@ -4,7 +4,7 @@ import com.henriquebarucco.calculaai.configuration.annotations.ProcessPhotoQueue
 import com.henriquebarucco.calculaai.photo.Photo
 import com.henriquebarucco.calculaai.photo.PhotoGateway
 import com.henriquebarucco.calculaai.service.presenter.toProcessPhotoMessage
-import com.henriquebarucco.calculaai.shared.utils.Logger
+import com.henriquebarucco.calculaai.shared.utils.Logger.Companion.getLogger
 import org.springframework.stereotype.Service
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.S3Client
@@ -15,7 +15,7 @@ class PhotoService(
     private val s3Client: S3Client,
     @ProcessPhotoQueue private val processPhotoService: EventService,
 ) : PhotoGateway {
-    private val logger = Logger.Companion.getLogger()
+    private val logger = getLogger()
     private val bucketName = "calcula-ai"
     private val type = "jpg"
 

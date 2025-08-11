@@ -1,5 +1,6 @@
 package com.henriquebarucco.calculaai.session.update
 
+import com.henriquebarucco.calculaai.price.PriceGateway
 import com.henriquebarucco.calculaai.session.SessionGateway
 import com.henriquebarucco.calculaai.session.SessionId
 import com.henriquebarucco.calculaai.session.update.dto.FailureUpdateSessionPriceCommand
@@ -9,6 +10,7 @@ import com.henriquebarucco.calculaai.shared.exceptions.ResourceNotFoundException
 
 class DefaultUpdateSessionPriceUseCase(
     private val sessionGateway: SessionGateway,
+    private val priceGateway: PriceGateway,
 ) : UpdateSessionPriceUseCase() {
     override fun execute(input: UpdateSessionPriceCommand) {
         val session =
@@ -31,6 +33,7 @@ class DefaultUpdateSessionPriceUseCase(
             }
         }
 
+        this.priceGateway.announce(session.getPrice(input.priceId), session)
         this.sessionGateway.save(session)
     }
 }

@@ -24,6 +24,11 @@ class Session(
             )
     }
 
+    fun total(): Double =
+        this.prices
+            .filter { it.status == Status.SUCCESS }
+            .sumOf { (it.value ?: 0.0) * it.quantity }
+
     fun addPrice(price: Price) {
         prices.add(price)
     }
@@ -46,7 +51,7 @@ class Session(
         existingPrice.status = Status.FAILED
     }
 
-    private fun getPrice(priceId: String): Price =
+    fun getPrice(priceId: String): Price =
         this.prices.find { it.id.value == priceId }
             ?: throw IllegalArgumentException("Price with id $priceId not found in session ${id.value}")
 }

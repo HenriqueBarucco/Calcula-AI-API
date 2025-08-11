@@ -1,6 +1,5 @@
 package com.henriquebarucco.calculaai.session.get.dto
 
-import com.henriquebarucco.calculaai.price.enum.Status
 import com.henriquebarucco.calculaai.session.Session
 
 data class GetSessionOutput(
@@ -10,10 +9,7 @@ data class GetSessionOutput(
 ) {
     constructor(session: Session) : this(
         id = session.id.value,
-        total =
-            session.prices
-                .filter { it.status == Status.SUCCESS }
-                .sumOf { (it.value ?: 0.0) * it.quantity },
+        total = session.total(),
         prices =
             session.prices.map {
                 PriceOutput(
