@@ -28,17 +28,25 @@ class Session(
         prices.add(price)
     }
 
-    fun updatePrice(
+    fun updatePriceSuccessfully(
         priceId: String,
         name: String,
         value: Double,
     ) {
-        val existingPrice =
-            prices.find { it.id.value == priceId }
-                ?: throw IllegalArgumentException("Price with id $priceId not found in session ${id.value}")
+        val existingPrice = this.getPrice(priceId)
 
         existingPrice.name = name
         existingPrice.value = value
         existingPrice.status = Status.SUCCESS
     }
+
+    fun updatePriceFailed(priceId: String) {
+        val existingPrice = this.getPrice(priceId)
+
+        existingPrice.status = Status.FAILED
+    }
+
+    private fun getPrice(priceId: String): Price =
+        this.prices.find { it.id.value == priceId }
+            ?: throw IllegalArgumentException("Price with id $priceId not found in session ${id.value}")
 }

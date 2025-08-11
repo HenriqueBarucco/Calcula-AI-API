@@ -1,17 +1,49 @@
 package com.henriquebarucco.calculaai.entrypoint.http.v1.session.dto
 
+import com.fasterxml.jackson.annotation.JsonSubTypes
+import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.henriquebarucco.calculaai.session.update.dto.FailureUpdateSessionPriceCommand
+import com.henriquebarucco.calculaai.session.update.dto.SuccessUpdateSessionPriceCommand
 import com.henriquebarucco.calculaai.session.update.dto.UpdateSessionPriceCommand
 
-data class UpdateSessionPriceRequest(
-    val priceId: String,
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.DEDUCTION,
+    include = JsonTypeInfo.As.PROPERTY,
+)
+@JsonSubTypes(
+    JsonSubTypes.Type(value = SuccessUpdateSessionPriceRequest::class),
+    JsonSubTypes.Type(value = FailureUpdateSessionPriceRequest::class),
+)
+sealed interface UpdateSessionPriceRequest {
+    fun toCommand(
+        priceId: String,
+        sessionId: String,
+    ): UpdateSessionPriceCommand
+}
+
+data class SuccessUpdateSessionPriceRequest(
     val name: String,
     val value: Double,
-)
-
-fun UpdateSessionPriceRequest.toCommand(sessionId: String) =
-    UpdateSessionPriceCommand(
+) : UpdateSessionPriceRequest {
+    override fun toCommand(
+        priceId: String,
+        sessionId: String,
+    ) = SuccessUpdateSessionPriceCommand(
         sessionId = sessionId,
-        priceId = this.priceId,
-        name = this.name,
-        value = this.value,
+        priceId = priceId,
+        name = name,
+        value = value,
     )
+}
+
+data class FailureUpdateSessionPriceRequest(
+    val error: Boolean,
+) : UpdateSessionPriceRequest {
+    override fun toCommand(
+        priceId: String,
+        sessionId: String,
+    ) = FailureUpdateSessionPriceCommand(
+        sessionId = sessionId,
+        priceId = priceId,
+    )
+}
