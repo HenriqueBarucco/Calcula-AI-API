@@ -20,7 +20,7 @@ class Session(
         ): Session =
             Session(
                 id = id,
-                prices = prices.toMutableList(),
+                prices = prices.sortedByDescending { it.createdAt }.toMutableList(),
             )
     }
 
