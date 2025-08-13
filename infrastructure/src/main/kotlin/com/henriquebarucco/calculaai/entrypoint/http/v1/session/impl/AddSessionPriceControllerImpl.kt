@@ -13,12 +13,14 @@ class AddSessionPriceControllerImpl(
 ) : AddSessionPriceController {
     override fun createPrice(
         file: MultipartFile,
+        quantity: Int,
         sessionId: String,
     ): ResponseEntity<Void> {
         val command =
             AddSessionPriceCommand(
-                sessionId,
+                sessionId = sessionId,
                 file = file.bytes,
+                quantity = quantity,
             )
         this.addSessionPriceUseCase.execute(command)
 

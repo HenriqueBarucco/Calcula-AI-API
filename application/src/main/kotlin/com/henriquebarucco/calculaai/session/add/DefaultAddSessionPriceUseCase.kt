@@ -13,13 +13,13 @@ class DefaultAddSessionPriceUseCase(
     private val photoGateway: PhotoGateway,
 ) : AddSessionPriceUseCase() {
     override fun execute(input: AddSessionPriceCommand) {
-        val (sessionId, file) = input
+        val (sessionId, file, quantity) = input
 
         val session =
             this.sessionGateway.findById(SessionId.with(sessionId))
                 ?: throw ResourceNotFoundException("Session with id $sessionId not found")
 
-        val price = Price.Companion.new(session.id, 1)
+        val price = Price.Companion.new(session.id, quantity)
 
         session.addPrice(price)
         this.sessionGateway.save(session)

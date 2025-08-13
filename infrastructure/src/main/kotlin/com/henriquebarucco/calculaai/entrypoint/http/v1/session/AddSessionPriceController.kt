@@ -13,6 +13,7 @@ interface AddSessionPriceController {
     @PostMapping(value = ["/prices"], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun createPrice(
         @RequestParam("file") file: MultipartFile,
+        @RequestParam("quantity", required = false, defaultValue = "1") quantity: Int,
         @RequestHeader("session") sessionId: String,
     ): ResponseEntity<Void>
 }
