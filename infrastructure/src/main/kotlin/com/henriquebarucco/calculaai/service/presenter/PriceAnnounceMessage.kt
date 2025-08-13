@@ -9,6 +9,7 @@ data class PriceAnnounceMessage(
     val priceId: String,
     val name: String?,
     val value: Double?,
+    val quantity: Int,
     val status: Status,
     val total: Double,
 ) {
@@ -21,6 +22,7 @@ data class PriceAnnounceMessage(
             priceId = price.id.value,
             name = price.name,
             value = price.value,
+            quantity = price.quantity,
             status = price.status,
             total = session.total(),
         )
