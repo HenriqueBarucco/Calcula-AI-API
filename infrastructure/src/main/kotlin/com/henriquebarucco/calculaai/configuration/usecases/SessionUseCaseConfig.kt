@@ -7,6 +7,8 @@ import com.henriquebarucco.calculaai.session.add.AddSessionPriceUseCase
 import com.henriquebarucco.calculaai.session.add.DefaultAddSessionPriceUseCase
 import com.henriquebarucco.calculaai.session.create.CreateSessionUseCase
 import com.henriquebarucco.calculaai.session.create.DefaultCreateSessionUseCase
+import com.henriquebarucco.calculaai.session.delete.DefaultDeleteSessionPriceUseCase
+import com.henriquebarucco.calculaai.session.delete.DeleteSessionPriceUseCase
 import com.henriquebarucco.calculaai.session.get.DefaultGetSessionUseCase
 import com.henriquebarucco.calculaai.session.get.GetSessionUseCase
 import com.henriquebarucco.calculaai.session.update.DefaultUpdateSessionPriceUseCase
@@ -24,10 +26,13 @@ class SessionUseCaseConfig(
     fun createSessionUseCase(): CreateSessionUseCase = DefaultCreateSessionUseCase(sessionGateway)
 
     @Bean
-    fun addSessionPriceUseCase(): AddSessionPriceUseCase = DefaultAddSessionPriceUseCase(sessionGateway, photoGateway)
+    fun addSessionPriceUseCase(): AddSessionPriceUseCase = DefaultAddSessionPriceUseCase(sessionGateway, photoGateway, priceGateway)
 
     @Bean
     fun updateSessionPriceUseCase(): UpdateSessionPriceUseCase = DefaultUpdateSessionPriceUseCase(sessionGateway, priceGateway)
+
+    @Bean
+    fun deleteSessionPriceUseCase(): DeleteSessionPriceUseCase = DefaultDeleteSessionPriceUseCase(sessionGateway)
 
     @Bean
     fun getSessionUseCase(): GetSessionUseCase = DefaultGetSessionUseCase(sessionGateway)

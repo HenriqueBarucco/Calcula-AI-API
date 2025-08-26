@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile
 interface AddSessionPriceController {
     @PostMapping(value = ["/prices"], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun createPrice(
-        @RequestParam("file") file: MultipartFile,
+        @RequestParam("file") file: MultipartFile?,
+        @RequestParam("name", required = false) name: String?,
+        @RequestParam("value", required = false) value: Double?,
         @RequestParam("quantity", required = false, defaultValue = "1") quantity: Int,
         @RequestHeader("session") sessionId: String,
     ): ResponseEntity<Void>

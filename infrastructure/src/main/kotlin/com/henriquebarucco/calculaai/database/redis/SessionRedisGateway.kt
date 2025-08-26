@@ -17,6 +17,15 @@ class SessionRedisGateway(
         val key = buildKey(session.id)
         val hashOps = this.redisTemplate.opsForHash<String, String>()
 
+        val existingKeys = hashOps.keys(key).filter { it != "_empty" }
+
+        val currentPriceIds = session.prices.map { it.id.value }.toSet()
+
+        val keysToDelete = existingKeys.filter { it !in currentPriceIds }
+        if (keysToDelete.isNotEmpty()) {
+            hashOps.delete(key, *keysToDelete.toTypedArray())
+        }
+
         if (session.prices.isEmpty()) {
             hashOps.put(key, "_empty", "true")
         } else {

@@ -21,6 +21,10 @@ spring:
       password: "\${REDIS_PASSWORD:}"
       database: "\${REDIS_DATABASE:0}"
       timeout: 60000
+  servlet:
+    multipart:
+      max-file-size: "\${MAX_FILE_SIZE:1GB}"
+      max-request-size: "\${MAX_REQUEST_SIZE:1GB}"
 
 rabbitmq:
   queues:

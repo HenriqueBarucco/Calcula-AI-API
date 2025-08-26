@@ -29,4 +29,17 @@ class Price(
                 createdAt = Timestamp(System.currentTimeMillis()),
             )
     }
+
+    fun isSuccessful(
+        name: String,
+        value: Double,
+    ) {
+        this.name = name
+        this.value = value
+        this.status = Status.SUCCESS
+    }
+
+    fun isFailed() {
+        this.status = Status.FAILED
+    }
 }

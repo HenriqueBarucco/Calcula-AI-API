@@ -39,19 +39,20 @@ class Session(
         value: Double,
     ) {
         val existingPrice = this.getPrice(priceId)
-
-        existingPrice.name = name
-        existingPrice.value = value
-        existingPrice.status = Status.SUCCESS
+        existingPrice.isSuccessful(name, value)
     }
 
     fun updatePriceFailed(priceId: String) {
         val existingPrice = this.getPrice(priceId)
-
-        existingPrice.status = Status.FAILED
+        existingPrice.isFailed()
     }
 
     fun getPrice(priceId: String): Price =
         this.prices.find { it.id.value == priceId }
             ?: throw IllegalArgumentException("Price with id $priceId not found in session ${id.value}")
+
+    fun deletePrice(priceId: String) {
+        val existingPrice = this.getPrice(priceId)
+        this.prices.remove(existingPrice)
+    }
 }

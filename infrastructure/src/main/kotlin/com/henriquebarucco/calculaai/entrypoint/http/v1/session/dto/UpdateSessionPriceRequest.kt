@@ -31,7 +31,13 @@ data class SuccessUpdateSessionPriceRequest(
     ) = SuccessUpdateSessionPriceCommand(
         sessionId = sessionId,
         priceId = priceId,
-        name = name,
+        name =
+            name
+                .split(" ")
+                .filter { it.isNotBlank() }
+                .joinToString(" ") { word ->
+                    word.lowercase().replaceFirstChar { it.titlecase() }
+                },
         value = value,
     )
 }
