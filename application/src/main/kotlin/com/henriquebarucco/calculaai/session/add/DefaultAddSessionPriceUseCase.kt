@@ -30,18 +30,18 @@ class DefaultAddSessionPriceUseCase(
         }
 
         val price = Price.new(session.id, quantity)
+        session.addPrice(price)
+
+        if (name != null && name.isNotEmpty() && value != null && value > 0) {
+            price.isSuccessful(name, value)
+        }
+
+        this.priceGateway.announce(price, session)
+        this.sessionGateway.save(session)
 
         if (file != null) {
             val photo = Photo.new(price.id, session.id, file)
             this.photoGateway.save(photo)
         }
-
-        if (name != null && name.isNotEmpty() && value != null && value > 0) {
-            price.isSuccessful(name, value)
-            this.priceGateway.announce(price, session)
-        }
-
-        session.addPrice(price)
-        this.sessionGateway.save(session)
     }
 }

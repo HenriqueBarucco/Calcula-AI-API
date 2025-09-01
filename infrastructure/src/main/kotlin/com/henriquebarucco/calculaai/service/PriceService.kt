@@ -18,14 +18,7 @@ class PriceService(
         price: Price,
         session: Session,
     ) {
-        this.logger.info(
-            "Announcing price: ${price.id.value} for session: ${session.id.value}",
-            mapOf(
-                "price" to price.toString(),
-                "sessionId" to session.id.value,
-                "status" to price.status.name,
-            ),
-        )
+        this.logger.info("Announcing price: $price for session: ${session.id.value}")
 
         val message = PriceAnnounceMessage.fromDomain(session, price)
         this.messagingTemplate.convertAndSend("/topic/${session.id.value}", message)

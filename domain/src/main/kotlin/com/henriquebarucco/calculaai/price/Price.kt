@@ -42,4 +42,7 @@ class Price(
     fun isFailed() {
         this.status = Status.FAILED
     }
+
+    override fun toString(): String =
+        "Price(id=$id, sessionId=$sessionId, name=$name, value=$value, quantity=$quantity, status=$status, createdAt=$createdAt)"
 }
