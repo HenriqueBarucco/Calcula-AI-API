@@ -4,6 +4,7 @@ import com.henriquebarucco.calculaai.session.get.dto.GetSessionOutput
 
 data class GetSessionResponse(
     val id: String,
+    val hasClub: Boolean,
     val total: Double,
     val prices: List<GetSessionPriceResponse>,
 ) {
@@ -11,6 +12,7 @@ data class GetSessionResponse(
         fun fromOutput(output: GetSessionOutput) =
             GetSessionResponse(
                 id = output.id,
+                hasClub = output.hasClub,
                 total = output.total,
                 prices =
                     output.prices.map {

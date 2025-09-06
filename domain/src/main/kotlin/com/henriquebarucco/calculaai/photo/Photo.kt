@@ -1,22 +1,22 @@
 package com.henriquebarucco.calculaai.photo
 
-import com.henriquebarucco.calculaai.price.PriceId
-import com.henriquebarucco.calculaai.session.SessionId
+import com.henriquebarucco.calculaai.price.Price
+import com.henriquebarucco.calculaai.session.Session
 
 class Photo(
-    val priceId: PriceId,
-    val sessionId: SessionId,
+    val price: Price,
+    val session: Session,
     val content: ByteArray,
 ) {
     companion object {
         fun new(
-            priceId: PriceId,
-            sessionId: SessionId,
+            price: Price,
+            session: Session,
             content: ByteArray,
         ): Photo =
             Photo(
-                priceId = priceId,
-                sessionId = sessionId,
+                price = price,
+                session = session,
                 content = content,
             )
     }

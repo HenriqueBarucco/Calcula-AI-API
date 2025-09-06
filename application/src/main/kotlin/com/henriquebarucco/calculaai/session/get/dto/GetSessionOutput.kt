@@ -4,11 +4,13 @@ import com.henriquebarucco.calculaai.session.Session
 
 data class GetSessionOutput(
     val id: String,
+    val hasClub: Boolean,
     val total: Double,
     val prices: List<PriceOutput>,
 ) {
     constructor(session: Session) : this(
         id = session.id.value,
+        hasClub = session.hasClub,
         total = session.total(),
         prices =
             session.prices.map {

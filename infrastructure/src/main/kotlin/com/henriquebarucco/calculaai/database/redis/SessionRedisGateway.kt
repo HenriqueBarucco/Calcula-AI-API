@@ -17,7 +17,9 @@ class SessionRedisGateway(
         val key = buildKey(session.id)
         val hashOps = this.redisTemplate.opsForHash<String, String>()
 
-        val existingKeys = hashOps.keys(key).filter { it != "_empty" }
+        hashOps.put(key, "_hasClub", session.hasClub.toString())
+
+        val existingKeys = hashOps.keys(key).filter { it != "_empty" && it != "_hasClub" }
 
         val currentPriceIds = session.prices.map { it.id.value }.toSet()
 
@@ -29,6 +31,7 @@ class SessionRedisGateway(
         if (session.prices.isEmpty()) {
             hashOps.put(key, "_empty", "true")
         } else {
+            hashOps.delete(key, "_empty")
             session.prices.forEach { price ->
                 hashOps.put(key, price.id.value, this.objectMapper.writeValueAsString(price))
             }
@@ -44,12 +47,14 @@ class SessionRedisGateway(
 
         if (entries.isEmpty()) return null
 
+        val hasClub = entries["_hasClub"]?.toBoolean() ?: false
+
         val prices =
             entries
-                .filterKeys { it != "_empty" }
+                .filterKeys { it != "_empty" && it != "_hasClub" }
                 .map { (_, value) -> this.objectMapper.readValue(value, Price::class.java) }
 
-        return Session.with(sessionId, prices)
+        return Session.with(sessionId, hasClub, prices)
     }
 
     private fun buildKey(sessionId: SessionId) = "session:${sessionId.value}"

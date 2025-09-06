@@ -22,7 +22,7 @@ class PhotoService(
     override fun save(photo: Photo): Photo {
         this.logger.info("Saving photo to S3 bucket: $bucketName")
 
-        val key = "${photo.priceId.value}.$type"
+        val key = "${photo.price.id.value}.$type"
 
         this.s3Client.putObject(
             PutObjectRequest
@@ -38,7 +38,7 @@ class PhotoService(
         this.logger.info("Photo saved successfully: $key")
 
         this.processPhotoService.publish(photo.toProcessPhotoMessage(type))
-        this.logger.info("Photo processing message published for: ${photo.priceId.value}")
+        this.logger.info("Photo processing message published for: ${photo.price.id.value}")
 
         return photo
     }

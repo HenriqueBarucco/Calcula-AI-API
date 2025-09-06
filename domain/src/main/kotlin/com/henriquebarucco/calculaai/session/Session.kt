@@ -5,21 +5,25 @@ import com.henriquebarucco.calculaai.price.enum.Status
 
 class Session(
     val id: SessionId,
+    val hasClub: Boolean,
     val prices: MutableList<Price>,
 ) {
     companion object {
-        fun new(): Session =
+        fun new(hasClub: Boolean): Session =
             Session(
                 id = SessionId.unique(),
+                hasClub = hasClub,
                 prices = mutableListOf(),
             )
 
         fun with(
             id: SessionId,
+            hasClub: Boolean,
             prices: List<Price>,
         ): Session =
             Session(
                 id = id,
+                hasClub = hasClub,
                 prices = prices.sortedByDescending { it.createdAt }.toMutableList(),
             )
     }
