@@ -1,18 +1,15 @@
 FROM curlimages/curl:8.2.1 AS download
 WORKDIR /download
-RUN  wget https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
+RUN wget https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
 
 FROM gradle:jdk21-alpine AS build
-
 WORKDIR /build
 ADD . .
-
 RUN chmod +x ./gradlew
 RUN ./gradlew clean bootJar -x test
 
 FROM eclipse-temurin:21-jdk-alpine
-
-RUN apk add --no-cache tzdata
+RUN apk add --no-cache tzdata curl
 
 WORKDIR /app
 
