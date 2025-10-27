@@ -43,3 +43,17 @@ logstash:
   url: "\${LOGSTASH_URL:localhost}"
   port: "\${LOGSTASH_PORT:5000}"
   env: "\${ENV:dev}"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health
+  metrics:
+    tags:
+      application: "\${spring.application.name}"
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: 'true'
