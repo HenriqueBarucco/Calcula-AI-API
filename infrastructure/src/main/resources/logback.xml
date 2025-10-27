@@ -38,7 +38,6 @@
 
     <springProperty scope="context" name="LOGSTASH_URL" source="logstash.url"/>
     <springProperty scope="context" name="LOGSTASH_PORT" source="logstash.port"/>
-    <springProperty scope="context" name="LOGSTASH_TOKEN" source="logstash.token"/>
     <springProperty scope="context" name="ENV" source="logstash.env"/>
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>${LOGSTASH_URL}:${LOGSTASH_PORT}</destination>
@@ -46,7 +45,6 @@
             <customFields>
                 {
                     "environment": "${ENV}",
-                    "token": "${LOGSTASH_TOKEN}",
                     "app": "calcula-ai-api",
                     "kind": "api",
                     "type": "json"

@@ -42,5 +42,4 @@ minio:
 logstash:
   url: "\${LOGSTASH_URL:localhost}"
   port: "\${LOGSTASH_PORT:5000}"
-  token: "\${LOGSTASH_TOKEN:xxx}"
   env: "\${ENV:dev}"
