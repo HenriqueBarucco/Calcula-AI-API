@@ -25,7 +25,7 @@ class S3ClientConfig {
             .builder()
             .endpointOverride(URI.create(s3Properties.endpoint!!))
             .credentialsProvider(StaticCredentialsProvider.create(credentials))
-            .region(Region.US_EAST_1)
+            .region(Region.of(s3Properties.region))
             .serviceConfiguration(
                 S3Configuration
                     .builder()

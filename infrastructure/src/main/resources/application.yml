@@ -37,6 +37,7 @@ minio:
   access-key: "\${MINIO_ACCESS_KEY}"
   secret-key: "\${MINIO_SECRET_KEY}"
   endpoint: "\${MINIO_ENDPOINT}"
+  region: "\${MINIO_REGION}"
 
 logstash:
   url: "\${LOGSTASH_URL:localhost}"
