@@ -11,6 +11,8 @@ import com.henriquebarucco.calculaai.session.delete.DefaultDeleteSessionPriceUse
 import com.henriquebarucco.calculaai.session.delete.DeleteSessionPriceUseCase
 import com.henriquebarucco.calculaai.session.get.DefaultGetSessionUseCase
 import com.henriquebarucco.calculaai.session.get.GetSessionUseCase
+import com.henriquebarucco.calculaai.session.photo.get.DefaultGetSessionPricePhotoUseCase
+import com.henriquebarucco.calculaai.session.photo.get.GetSessionPricePhotoUseCase
 import com.henriquebarucco.calculaai.session.update.DefaultUpdateSessionPriceUseCase
 import com.henriquebarucco.calculaai.session.update.UpdateSessionPriceUseCase
 import org.springframework.context.annotation.Bean
@@ -36,4 +38,7 @@ class SessionUseCaseConfig(
 
     @Bean
     fun getSessionUseCase(): GetSessionUseCase = DefaultGetSessionUseCase(sessionGateway)
+
+    @Bean
+    fun getSessionPricePhotoUseCase(): GetSessionPricePhotoUseCase = DefaultGetSessionPricePhotoUseCase(sessionGateway, photoGateway)
 }
