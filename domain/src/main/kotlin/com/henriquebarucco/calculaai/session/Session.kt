@@ -41,9 +41,10 @@ class Session(
         priceId: String,
         name: String,
         value: Double,
+        quantity: Int?,
     ) {
         val existingPrice = this.getPrice(priceId)
-        existingPrice.isSuccessful(name, value)
+        existingPrice.isSuccessful(name, value, quantity)
     }
 
     fun updatePriceFailed(priceId: String) {

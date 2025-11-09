@@ -33,7 +33,7 @@ class DefaultAddSessionPriceUseCase(
         session.addPrice(price)
 
         if (name != null && name.isNotEmpty() && value != null && value > 0) {
-            price.isSuccessful(name, value)
+            price.isSuccessful(name, value, quantity)
         }
 
         if (file != null) {

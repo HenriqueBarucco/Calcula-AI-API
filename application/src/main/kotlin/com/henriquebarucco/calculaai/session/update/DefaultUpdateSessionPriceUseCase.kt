@@ -23,6 +23,7 @@ class DefaultUpdateSessionPriceUseCase(
                     priceId = input.priceId,
                     name = input.name,
                     value = input.value,
+                    quantity = input.quantity,
                 )
             }
 

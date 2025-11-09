@@ -10,7 +10,7 @@ class Price(
     val sessionId: SessionId,
     var name: String?,
     var value: Double?,
-    val quantity: Int,
+    var quantity: Int,
     var status: Status,
     val createdAt: Timestamp,
 ) {
@@ -33,9 +33,13 @@ class Price(
     fun isSuccessful(
         name: String,
         value: Double,
+        quantity: Int?,
     ) {
         this.name = name
         this.value = value
+
+        quantity?.let { this.quantity = it }
+
         this.status = Status.SUCCESS
     }
 

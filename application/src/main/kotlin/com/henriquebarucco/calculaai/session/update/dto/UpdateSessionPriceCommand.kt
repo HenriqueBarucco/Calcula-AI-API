@@ -10,6 +10,7 @@ data class SuccessUpdateSessionPriceCommand(
     override val priceId: String,
     val name: String,
     val value: Double,
+    val quantity: Int?,
 ) : UpdateSessionPriceCommand
 
 data class FailureUpdateSessionPriceCommand(

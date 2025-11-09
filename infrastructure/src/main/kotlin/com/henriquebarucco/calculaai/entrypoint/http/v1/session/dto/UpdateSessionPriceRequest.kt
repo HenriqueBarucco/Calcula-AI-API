@@ -24,6 +24,7 @@ sealed interface UpdateSessionPriceRequest {
 data class SuccessUpdateSessionPriceRequest(
     val name: String,
     val value: Double,
+    val quantity: Int?,
 ) : UpdateSessionPriceRequest {
     override fun toCommand(
         priceId: String,
@@ -39,6 +40,7 @@ data class SuccessUpdateSessionPriceRequest(
                     word.lowercase().replaceFirstChar { it.titlecase() }
                 },
         value = value,
+        quantity = quantity,
     )
 }
 
